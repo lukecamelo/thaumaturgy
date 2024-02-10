@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://daaacge00nwc3"]
+
+[node name="Hearts" type="CanvasLayer"]
