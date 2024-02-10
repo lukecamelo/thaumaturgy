@@ -1,3 +1,11 @@
-[gd_scene format=3 uid="uid://daaacge00nwc3"]
+[gd_scene load_steps=2 format=3 uid="uid://daaacge00nwc3"]
+
+[ext_resource type="Script" path="res://scenes/ui/hearts.gd" id="1_yeqys"]
 
 [node name="Hearts" type="CanvasLayer"]
+script = ExtResource("1_yeqys")
+
+[node name="HeartsContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(16, 16)
+offset_right = 48.0
+offset_bottom = 16.0

@@ -6,11 +6,14 @@ const ACCELERATION := 25
 const ROTATION_SPEED := 10
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var shadow_sprite: Sprite2D = $ShadowSprite
+@onready var health_component: HealthComponent = $HealthComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var invincibility_timer: Timer = $InvincibilityTimer
 
 
 func _ready() -> void:
-	pass
+	invincibility_timer.timeout.connect(_on_invincibility_timer_timeout)
+	hurtbox_component.hit.connect(_on_hit)
 
 
 func _process(delta: float) -> void:
@@ -41,3 +44,13 @@ func tilt_character(movement_vector: Vector2, delta: float) -> void:
 		target_rotation = 0
 	
 	global_rotation = lerp_angle(current_rotation, target_rotation, delta * ROTATION_SPEED)
+
+
+func _on_hit() -> void:
+	GameEvents.emit_player_health_changed(health_component.current_health)
+	hurtbox_component.is_invincible = true
+	invincibility_timer.start()
+
+
+func _on_invincibility_timer_timeout() -> void:
+	hurtbox_component.is_invincible = false

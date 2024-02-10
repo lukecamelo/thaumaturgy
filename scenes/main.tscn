@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://be0tgxuxnuw64"]
+[gd_scene load_steps=9 format=3 uid="uid://be0tgxuxnuw64"]
 
 [ext_resource type="PackedScene" uid="uid://ce4v1lx2isfq6" path="res://scenes/manager/enemy_manager.tscn" id="1_w38bu"]
 [ext_resource type="Texture2D" uid="uid://b7pdr8hv5empk" path="res://assets/na16-bg.png" id="1_x8ax4"]
 [ext_resource type="PackedScene" uid="uid://d0ea8rw1rw6l3" path="res://scenes/player/player.tscn" id="2_mdsro"]
 [ext_resource type="PackedScene" uid="uid://cdflckhier3pk" path="res://scenes/enemy_spawn_location.tscn" id="3_tp1hg"]
+[ext_resource type="PackedScene" uid="uid://daaacge00nwc3" path="res://scenes/ui/hearts.tscn" id="5_8lsku"]
+[ext_resource type="Texture2D" uid="uid://b1robfaakpiwb" path="res://assets/test_guy.png" id="6_wjw35"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8jhej"]
 size = Vector2(320, 5)
@@ -13,48 +15,10 @@ size = Vector2(6, 190)
 
 [node name="Main" type="Node2D"]
 
-[node name="EnemyManager" parent="." instance=ExtResource("1_w38bu")]
-
-[node name="Boundaries" type="Node" parent="."]
-
-[node name="Area2D" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
-position = Vector2(10, -10)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Area2D"]
-position = Vector2(150, 7.5)
-shape = SubResource("RectangleShape2D_8jhej")
-
-[node name="Area2D2" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
-position = Vector2(10, 175)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Area2D2"]
-position = Vector2(150, 7.5)
-shape = SubResource("RectangleShape2D_8jhej")
-
-[node name="Area2D3" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Area2D3"]
-position = Vector2(-3, 90)
-shape = SubResource("RectangleShape2D_isuoj")
-
-[node name="Area2D4" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
-position = Vector2(326, 0)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Area2D4"]
-position = Vector2(-3, 90)
-shape = SubResource("RectangleShape2D_isuoj")
-
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 320.0
 offset_bottom = 180.0
 texture = ExtResource("1_x8ax4")
-
-[node name="Player" parent="." instance=ExtResource("2_mdsro")]
-position = Vector2(151, 83)
 
 [node name="SpawnLocations" type="Node2D" parent="."]
 
@@ -66,3 +30,76 @@ position = Vector2(250, 25)
 
 [node name="EnemySpawnLocation3" parent="SpawnLocations" instance=ExtResource("3_tp1hg")]
 position = Vector2(92, 125)
+
+[node name="EnemyManager" parent="." instance=ExtResource("1_w38bu")]
+
+[node name="Boundaries" type="Node" parent="."]
+
+[node name="TopBoundary" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
+position = Vector2(10, -10)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBoundary"]
+position = Vector2(150, 7.5)
+shape = SubResource("RectangleShape2D_8jhej")
+
+[node name="BottomBoundary" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
+position = Vector2(10, 175)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBoundary"]
+position = Vector2(150, 7.5)
+shape = SubResource("RectangleShape2D_8jhej")
+
+[node name="LeftBoundary" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBoundary"]
+position = Vector2(-3, 90)
+shape = SubResource("RectangleShape2D_isuoj")
+
+[node name="RightBoundary" type="StaticBody2D" parent="Boundaries" groups=["boundary"]]
+position = Vector2(326, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBoundary"]
+position = Vector2(-3, 90)
+shape = SubResource("RectangleShape2D_isuoj")
+
+[node name="TopBulletBoundary" type="Area2D" parent="Boundaries" groups=["boundary"]]
+position = Vector2(10, -10)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBulletBoundary"]
+position = Vector2(150, 7.5)
+shape = SubResource("RectangleShape2D_8jhej")
+
+[node name="BottomBulletBoundary" type="Area2D" parent="Boundaries" groups=["boundary"]]
+position = Vector2(10, 175)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBulletBoundary"]
+position = Vector2(150, 7.5)
+shape = SubResource("RectangleShape2D_8jhej")
+
+[node name="LeftBulletBoundary" type="Area2D" parent="Boundaries" groups=["boundary"]]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBulletBoundary"]
+position = Vector2(-3, 90)
+shape = SubResource("RectangleShape2D_isuoj")
+
+[node name="RightBulletBoundary" type="Area2D" parent="Boundaries" groups=["boundary"]]
+position = Vector2(326, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBulletBoundary"]
+position = Vector2(-3, 90)
+shape = SubResource("RectangleShape2D_isuoj")
+
+[node name="Player" parent="." instance=ExtResource("2_mdsro")]
+position = Vector2(151, 83)
+
+[node name="Hearts" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_8lsku")]
+player = NodePath("../Player")
+heart_texture = ExtResource("6_wjw35")

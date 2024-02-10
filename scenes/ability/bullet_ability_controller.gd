@@ -5,9 +5,11 @@ extends Node
 
 @onready var cooldown_timer: Timer = $CooldownTimer
 
+var projectile_size: float = 1.0
+
 
 func _ready() -> void:
-	cooldown_timer.timeout.connect(_on_cooldown_timer_timeout)
+	GameEvents.upgrade_applied.connect(_on_upgrade_applied)
 
 
 func _input(event: InputEvent) -> void:
@@ -28,11 +30,14 @@ func fire_bullet() -> void:
 	
 	bullet.global_position = player.global_position
 	bullet.direction = bullet_direction.normalized()
-	var direction_degrees = rad_to_deg(bullet.direction.angle())
-	print(direction_degrees)
-	#bullet.sprite_2d.rotation = bullet.direction.angle() + deg_to_rad(90)
+	
 	bullet.global_rotation = bullet.direction.angle() + deg_to_rad(90)
+	bullet.scale = Vector2(projectile_size, projectile_size)
 
 
-func _on_cooldown_timer_timeout() -> void:
-	pass
+func _on_upgrade_applied(current_upgrades: Dictionary) -> void:
+	if current_upgrades["projectile_size_increase"]:
+		var projectile_size_modifier: float = current_upgrades["projectile_size_increase"]["resource"].projectile_size_modifier
+		var upgrade_count = current_upgrades["projectile_size_increase"]["quantity"]
+		
+		projectile_size = projectile_size * upgrade_count * projectile_size_modifier
