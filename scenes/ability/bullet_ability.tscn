@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddnsd7soifjtd"]
+
+[ext_resource type="Script" path="res://scenes/ability/bullet_ability.gd" id="1_3eupb"]
+[ext_resource type="Texture2D" uid="uid://emylhpr5225t" path="res://assets/misc_sheet.png" id="1_hhxny"]
+[ext_resource type="PackedScene" uid="uid://mertgdotguca" path="res://components/hitbox_component.tscn" id="2_4bnna"]
+[ext_resource type="PackedScene" uid="uid://cql18pceq7vk0" path="res://components/hit_particle_component.tscn" id="2_d3l86"]
+[ext_resource type="PackedScene" uid="uid://bsqjslfffysjp" path="res://components/drop_shadow_component.tscn" id="5_spmn7"]
+[ext_resource type="Texture2D" uid="uid://cs61gakg703io" path="res://assets/bullet.png" id="6_flov1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_13kkg"]
+radius = 4.0
+height = 9.0
+
+[node name="BulletAbility" type="Node2D" groups=["bullet"]]
+script = ExtResource("1_3eupb")
+hit_particles_scene = ExtResource("2_d3l86")
+
+[node name="DropShadowComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("5_spmn7")]
+sprite_texture = ExtResource("6_flov1")
+entity = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_hhxny")
+hframes = 4
+vframes = 4
+frame = 3
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_4bnna")]
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, 0.5)
+shape = SubResource("CapsuleShape2D_13kkg")
+
+[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]

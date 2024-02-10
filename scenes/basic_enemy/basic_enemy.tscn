@@ -1,0 +1,104 @@
+[gd_scene load_steps=14 format=3 uid="uid://b1qffdbggm6fk"]
+
+[ext_resource type="Script" path="res://scenes/basic_enemy/basic_enemy.gd" id="1_2e13g"]
+[ext_resource type="Texture2D" uid="uid://emylhpr5225t" path="res://assets/misc_sheet.png" id="1_gucff"]
+[ext_resource type="PackedScene" uid="uid://cu1brxa38tkbv" path="res://components/hurtbox_component.tscn" id="2_30jhy"]
+[ext_resource type="PackedScene" uid="uid://og4qgb6m3agg" path="res://components/hitflash_component.tscn" id="3_6it6i"]
+[ext_resource type="Shader" path="res://components/hitflash_shader_material.gdshader" id="4_7nyb2"]
+[ext_resource type="PackedScene" uid="uid://c1aqklropjwtu" path="res://components/health_component.tscn" id="4_rutv7"]
+[ext_resource type="PackedScene" uid="uid://d5e21jh6ssnc" path="res://components/velocity_component.tscn" id="5_sturl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gwai3"]
+resource_local_to_scene = true
+shader = ExtResource("4_7nyb2")
+shader_parameter/lerp_percent = null
+
+[sub_resource type="Animation" id="Animation_0vsf8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_2esw0"]
+resource_name = "default"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.5708, 3.14159]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6d8xq"]
+_data = {
+"RESET": SubResource("Animation_0vsf8"),
+"default": SubResource("Animation_2esw0")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uxibc"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mwycv"]
+radius = 6.0
+
+[node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_2e13g")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_rutv7")]
+max_health = 3.0
+
+[node name="HitflashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("3_6it6i")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hitflash_material = SubResource("ShaderMaterial_gwai3")
+
+[node name="VelocityComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("5_sturl")]
+entity = NodePath("..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6d8xq")
+}
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_uxibc")
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_30jhy")]
+collision_layer = 16
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_mwycv")
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+modulate = Color(0.152941, 0.160784, 0.223529, 0.588235)
+position = Vector2(1, 1)
+texture = ExtResource("1_gucff")
+hframes = 4
+vframes = 4
+frame = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gucff")
+hframes = 4
+vframes = 4
+frame = 4

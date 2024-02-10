@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0ea8rw1rw6l3"]
+
+[ext_resource type="Texture2D" uid="uid://fk6pb2cvvo18" path="res://assets/test_guy_2.png" id="1_phej2"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_q0f05"]
+[ext_resource type="PackedScene" uid="uid://prks00k4qons" path="res://scenes/ability/bullet_ability_manager.tscn" id="2_aln7l"]
+[ext_resource type="Texture2D" uid="uid://fdncux1h0ipp" path="res://assets/test_guy_shadow.png" id="5_5fqos"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i20pf"]
+radius = 4.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("1_q0f05")
+
+[node name="BulletAbilityManager" parent="." instance=ExtResource("2_aln7l")]
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+position = Vector2(1, 1)
+texture = ExtResource("5_5fqos")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_phej2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_i20pf")

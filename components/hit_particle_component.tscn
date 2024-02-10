@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cql18pceq7vk0"]
+
+[ext_resource type="Script" path="res://components/hit_particle_component.gd" id="1_bvej0"]
+[ext_resource type="Texture2D" uid="uid://cyku0a8cg1kqi" path="res://assets/bullet_hit_particle_cream.png" id="2_rrcjd"]
+
+[sub_resource type="Curve" id="Curve_x5ogb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.263736), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dxq0y"]
+curve = SubResource("Curve_x5ogb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ruqmh"]
+particle_flag_disable_z = true
+angle_min = -360.0
+angle_max = 720.0
+spread = 168.849
+initial_velocity_min = 30.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 0, 0)
+scale_max = 3.5
+scale_curve = SubResource("CurveTexture_dxq0y")
+scale_over_velocity_max = 89.89
+
+[node name="HitParticleComponent" type="Node2D"]
+script = ExtResource("1_bvej0")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_ruqmh")
+texture = ExtResource("2_rrcjd")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0

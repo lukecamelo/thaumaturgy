@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://prks00k4qons"]
+
+[ext_resource type="Script" path="res://scenes/ability/bullet_ability_controller.gd" id="1_7ihf4"]
+[ext_resource type="PackedScene" uid="uid://ddnsd7soifjtd" path="res://scenes/ability/bullet_ability.tscn" id="2_m2ieo"]
+
+[node name="BulletAbilityController" type="Node"]
+script = ExtResource("1_7ihf4")
+bullet_ability = ExtResource("2_m2ieo")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true

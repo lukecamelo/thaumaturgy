@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddnsd7soifjtd"]
+
+[ext_resource type="Script" path="res://scenes/ability/bullet_ability.gd" id="1_3eupb"]
+[ext_resource type="Texture2D" uid="uid://emylhpr5225t" path="res://assets/misc_sheet.png" id="1_hhxny"]
+[ext_resource type="PackedScene" uid="uid://mertgdotguca" path="res://components/hitbox_component.tscn" id="2_4bnna"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdg0j"]
+size = Vector2(2, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3taa"]
+size = Vector2(2, 5)
+
+[node name="BulletAbility" type="CharacterBody2D"]
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("1_3eupb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("1_hhxny")
+hframes = 4
+vframes = 4
+frame = 2
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_4bnna")]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_kdg0j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_l3taa")
