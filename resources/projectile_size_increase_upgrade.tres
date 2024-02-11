@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatsUpgrade" load_steps=2 format=3 uid="uid://bcqvp0ns7tifi"]
+
+[ext_resource type="Script" path="res://resources/stats_upgrade.gd" id="1_pn3g2"]
+
+[resource]
+script = ExtResource("1_pn3g2")
+projectile_size_modifier = 2.0
+projectile_speed_modifier = 0.0
+id = "projectile_size_increase"
+description = "Increases projectile size"

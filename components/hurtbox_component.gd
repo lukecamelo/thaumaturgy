@@ -5,6 +5,8 @@ signal hit
 
 @export var health_component: HealthComponent
 
+var is_invincible: bool = false
+
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 
@@ -18,6 +20,9 @@ func _on_area_entered(other_area: Area2D) -> void:
 		return
 	
 	if health_component == null:
+		return
+	
+	if is_invincible:
 		return
 	
 	var hitbox_component = other_area as HitboxComponent
