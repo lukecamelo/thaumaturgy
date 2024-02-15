@@ -19,7 +19,7 @@ func _ready() -> void:
 	shadow_sprite.global_position = entity.global_position
 	shadow_sprite.position += Vector2(1, 1)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if entity.is_in_group("bullet"):
 		shadow_sprite.global_rotation = entity.direction.angle() + deg_to_rad(90)
 	else:

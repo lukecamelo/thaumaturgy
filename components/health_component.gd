@@ -12,7 +12,7 @@ func _ready() -> void:
 	current_health = max_health
 
 
-func damage(damage_amount: int) -> void:
+func take_damage(damage_amount: int) -> void:
 	current_health = max(current_health - damage_amount, 0)
 	health_updated.emit()
 	Callable(check_death).call_deferred()

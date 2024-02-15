@@ -1,15 +1,17 @@
-[gd_scene load_steps=16 format=3 uid="uid://b1qffdbggm6fk"]
+[gd_scene load_steps=18 format=3 uid="uid://b1qffdbggm6fk"]
 
 [ext_resource type="Script" path="res://scenes/basic_enemy/basic_enemy.gd" id="1_2e13g"]
 [ext_resource type="Texture2D" uid="uid://emylhpr5225t" path="res://assets/misc_sheet.png" id="1_gucff"]
-[ext_resource type="PackedScene" uid="uid://cu1brxa38tkbv" path="res://components/hurtbox_component.tscn" id="2_30jhy"]
 [ext_resource type="PackedScene" uid="uid://og4qgb6m3agg" path="res://components/hitflash_component.tscn" id="3_6it6i"]
 [ext_resource type="Shader" path="res://components/hitflash_shader_material.gdshader" id="4_7nyb2"]
 [ext_resource type="PackedScene" uid="uid://c1aqklropjwtu" path="res://components/health_component.tscn" id="4_rutv7"]
 [ext_resource type="PackedScene" uid="uid://d5e21jh6ssnc" path="res://components/velocity_component.tscn" id="5_sturl"]
-[ext_resource type="PackedScene" uid="uid://mertgdotguca" path="res://components/hitbox_component.tscn" id="8_l7g67"]
+[ext_resource type="PackedScene" uid="uid://bsqjslfffysjp" path="res://components/drop_shadow_component.tscn" id="6_f4oex"]
+[ext_resource type="Texture2D" uid="uid://bf03xs16lg7un" path="res://assets/basic_enemy.png" id="7_mnbvh"]
+[ext_resource type="Script" path="res://hitbox.gd" id="10_wvhot"]
+[ext_resource type="Script" path="res://hurtbox.gd" id="11_4n56r"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_atqcy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ccy63"]
 resource_local_to_scene = true
 shader = ExtResource("4_7nyb2")
 shader_parameter/lerp_percent = null
@@ -55,11 +57,11 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_uxibc"]
 radius = 4.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mwycv"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_42qel"]
 radius = 6.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xkkv8"]
-radius = 4.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_tfyqt"]
+radius = 4.12311
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
@@ -67,14 +69,18 @@ collision_mask = 5
 script = ExtResource("1_2e13g")
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_rutv7")]
-max_health = 3.0
+max_health = 10
 
 [node name="HitflashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("3_6it6i")]
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Sprite2D")
-hitflash_material = SubResource("ShaderMaterial_atqcy")
+hitflash_material = SubResource("ShaderMaterial_ccy63")
 
 [node name="VelocityComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("5_sturl")]
+entity = NodePath("..")
+
+[node name="DropShadowComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("6_f4oex")]
+sprite_texture = ExtResource("7_mnbvh")
 entity = NodePath("..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -86,30 +92,25 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_uxibc")
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_30jhy")]
-collision_layer = 16
-health_component = NodePath("../HealthComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-shape = SubResource("CircleShape2D_mwycv")
-
-[node name="ShadowSprite" type="Sprite2D" parent="."]
-modulate = Color(0.152941, 0.160784, 0.223529, 0.588235)
-position = Vector2(1, 1)
-texture = ExtResource("1_gucff")
-hframes = 4
-vframes = 4
-frame = 4
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_gucff")
 hframes = 4
 vframes = 4
 frame = 4
 
-[node name="HitboxComponent" parent="." instance=ExtResource("8_l7g67")]
-collision_layer = 8
-damage = 1
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("11_4n56r")
+health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-shape = SubResource("CircleShape2D_xkkv8")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_42qel")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("10_wvhot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_tfyqt")

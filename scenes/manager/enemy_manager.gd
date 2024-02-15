@@ -15,10 +15,15 @@ func get_spawn_locations() -> Array[Node]:
 func _on_timer_timeout() -> void:
 	var spawn_locations := get_spawn_locations()
 	for spawn_location in spawn_locations:
-		var enemy = basic_enemy_scene.instantiate() as CharacterBody2D
-		
-		spawn_location.flash()
-		await spawn_location.animation_player.animation_finished
-		
-		get_tree().root.add_child(enemy)
-		enemy.global_position = spawn_location.global_position
+		pass
+		#spawn_enemy(spawn_location)
+
+
+func spawn_enemy(spawn_location) -> void:
+	var enemy = basic_enemy_scene.instantiate() as CharacterBody2D
+	
+	spawn_location.flash()
+	await spawn_location.animation_player.animation_finished
+	
+	get_tree().root.add_child(enemy)
+	enemy.global_position = spawn_location.global_position

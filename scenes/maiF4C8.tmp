@@ -1,13 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://be0tgxuxnuw64"]
+[gd_scene load_steps=9 format=3 uid="uid://be0tgxuxnuw64"]
 
 [ext_resource type="PackedScene" uid="uid://ce4v1lx2isfq6" path="res://scenes/manager/enemy_manager.tscn" id="1_w38bu"]
 [ext_resource type="Texture2D" uid="uid://b7pdr8hv5empk" path="res://assets/na16-bg.png" id="1_x8ax4"]
 [ext_resource type="PackedScene" uid="uid://ccwiibix2o6gp" path="res://scenes/manager/upgrade_manager.tscn" id="2_eclim"]
 [ext_resource type="PackedScene" uid="uid://d0ea8rw1rw6l3" path="res://scenes/player/player.tscn" id="2_mdsro"]
-[ext_resource type="PackedScene" uid="uid://daaacge00nwc3" path="res://scenes/ui/hearts.tscn" id="3_cqom4"]
 [ext_resource type="PackedScene" uid="uid://cdflckhier3pk" path="res://scenes/enemy_spawn_location.tscn" id="3_tp1hg"]
-[ext_resource type="Texture2D" uid="uid://3ujpc4nnlw3c" path="res://assets/heart_full.png" id="4_ax63q"]
-[ext_resource type="PackedScene" uid="uid://ch8lqs2jvx6h3" path="res://scenes/manager/wave_manager.tscn" id="5_tkvea"]
 [ext_resource type="PackedScene" uid="uid://b1qffdbggm6fk" path="res://scenes/basic_enemy/basic_enemy.tscn" id="6_qbodu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8jhej"]
@@ -18,14 +15,9 @@ size = Vector2(6, 190)
 
 [node name="Main" type="Node2D"]
 
-[node name="Hearts" parent="." instance=ExtResource("3_cqom4")]
-heart_texture = ExtResource("4_ax63q")
-
 [node name="EnemyManager" parent="." instance=ExtResource("1_w38bu")]
 
 [node name="UpgradeManager" parent="." instance=ExtResource("2_eclim")]
-
-[node name="WaveManager" parent="." instance=ExtResource("5_tkvea")]
 
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 320.0

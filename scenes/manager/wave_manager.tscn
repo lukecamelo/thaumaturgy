@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch8lqs2jvx6h3"]
+
+[ext_resource type="Script" path="res://scenes/manager/wave_manager.gd" id="1_myl2q"]
+[ext_resource type="PackedScene" uid="uid://bocyb7qkh524w" path="res://scenes/ui/store_screen.tscn" id="2_ioohx"]
+
+[node name="WaveManager" type="Node"]
+script = ExtResource("1_myl2q")
+store_screen_scene = ExtResource("2_ioohx")
